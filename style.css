@@ -1,0 +1,332 @@
+/* =========================================================
+   PALETA (4 colores, tonos apagados estilo vintage con toque moderno)
+   --ciruela : fondo principal (morado oscuro desgastado)
+   --ciruela-claro : fondo de tarjetas y secciones
+   --hueso : texto y detalles claros
+   --mostaza : color de acento (botones, títulos, bordes)
+   Para cambiar los colores de toda la página, edita solo estas variables.
+   ========================================================= */
+:root {
+  --ciruela: #241c2b;
+  --ciruela-claro: #34283d;
+  --hueso: #ebe5d6;
+  --mostaza: #d9a441;
+}
+
+/* ---------- Reinicio y modelo de caja ----------
+   border-box hace que padding y borde se cuenten dentro del ancho */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth; /* desplazamiento suave al hacer clic en el menú */
+}
+
+/* Selector de etiqueta: estilos generales del texto */
+body {
+  background-color: var(--ciruela);
+  color: var(--hueso);
+  font-family: "Work Sans", Arial, sans-serif;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  font-family: "Bowlby One", Impact, sans-serif;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ---------- ENCABEZADO Y MENÚ ----------
+   Selector de ID (#encabezado). El menú se queda fijo arriba. */
+#encabezado {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background-color: var(--ciruela);
+  border-bottom: 3px solid var(--mostaza);
+}
+
+/* Flexbox: logo a la izquierda, enlaces a la derecha */
+.menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 10px 20px;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: "Bowlby One", Impact, sans-serif;
+  font-size: 1.5rem;
+  color: var(--mostaza);
+}
+
+/* LOGO REDONDO: border-radius 50% + ancho y alto iguales */
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--mostaza);
+  background-color: var(--ciruela-claro); /* se ve el círculo aunque no haya imagen */
+}
+
+.menu-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  list-style: none;
+}
+
+/* Efecto hover con transición en los enlaces del menú */
+.menu-links a {
+  display: block;
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: background-color 0.25s, color 0.25s;
+}
+
+.menu-links a:hover,
+.menu-links a:focus-visible {
+  background-color: var(--mostaza);
+  color: var(--ciruela);
+}
+
+/* Página actual resaltada en el menú */
+.menu-links a[aria-current="page"] {
+  border-bottom: 3px solid var(--mostaza);
+  border-radius: 6px 6px 0 0;
+}
+
+/* ---------- PORTADA ---------- */
+.portada {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 90px 20px;
+  text-align: center;
+}
+
+.portada h1 {
+  font-size: clamp(2.2rem, 7vw, 4rem); /* tamaño que se adapta a la pantalla */
+  color: var(--mostaza);
+  margin-bottom: 20px;
+}
+
+.portada p {
+  font-size: 1.15rem;
+  margin-bottom: 30px;
+}
+
+/* ---------- BOTONES (clase .boton) ---------- */
+.boton {
+  display: inline-block;
+  background-color: var(--mostaza);
+  color: var(--ciruela);
+  font-family: "Work Sans", Arial, sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 28px;
+  border: 2px solid var(--mostaza);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.25s, color 0.25s, transform 0.25s;
+}
+
+.boton:hover {
+  background-color: transparent;
+  color: var(--mostaza);
+  transform: translateY(-3px);
+}
+
+/* ---------- SECCIONES (clase compartida) ---------- */
+.seccion {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+.seccion h2 {
+  font-size: 2rem;
+  color: var(--mostaza);
+  margin-bottom: 30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--ciruela-claro);
+}
+
+/* ---------- BANDAS (display: grid) ----------
+   auto-fit + minmax: las columnas se acomodan solas según el ancho */
+.rejilla-bandas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 24px;
+}
+
+.banda {
+  text-align: center;
+}
+
+.banda h3 {
+  font-size: 1.1rem;
+  margin: 14px 0 4px;
+}
+
+/* IMÁGENES CUADRADAS: aspect-ratio 1/1 mantiene el cuadrado
+   y overflow hidden evita que la imagen se salga al agrandarse */
+.marco-cuadrado {
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  border: 3px solid var(--ciruela-claro);
+  background-color: var(--ciruela-claro); /* se ve el cuadro aunque no haya imagen */
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.marco-cuadrado img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  filter: grayscale(60%);
+  transition: transform 0.4s, filter 0.4s;
+}
+
+/* HOVER: la imagen se acerca, recupera color y el borde se ilumina */
+.banda:hover .marco-cuadrado {
+  border-color: var(--mostaza);
+  box-shadow: 0 0 0 4px rgba(217, 164, 65, 0.3);
+}
+
+.banda:hover .marco-cuadrado img {
+  transform: scale(1.08);
+  filter: grayscale(0%);
+}
+
+/* ---------- HISTORIA ---------- */
+.historia {
+  background-color: var(--ciruela-claro);
+  border-left: 6px solid var(--mostaza);
+  padding: 20px 24px;
+  margin-bottom: 20px;
+  max-width: 75ch; /* línea de lectura cómoda */
+}
+
+.historia h3 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+
+/* ---------- DATOS CURIOSOS (display: flex) ---------- */
+.fila-datos {
+  display: flex;
+  flex-wrap: wrap; /* en pantallas pequeñas pasan a otra fila */
+  gap: 20px;
+}
+
+.dato {
+  flex: 1 1 280px; /* crecen, se encogen y miden mínimo 280px */
+  background-color: var(--ciruela-claro);
+  padding: 24px;
+  border-top: 5px solid var(--mostaza);
+}
+
+.dato h3 {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+}
+
+/* ---------- CONTACTO ---------- */
+.contacto-caja {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.formulario {
+  flex: 2 1 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.formulario input,
+.formulario textarea {
+  width: 100%;
+  padding: 10px 12px;
+  background-color: var(--ciruela-claro);
+  color: var(--hueso);
+  border: 2px solid transparent;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.25s;
+}
+
+.formulario input:focus,
+.formulario textarea:focus {
+  outline: none;
+  border-color: var(--mostaza);
+}
+
+.formulario .boton {
+  align-self: flex-start;
+  margin-top: 10px;
+}
+
+.info-tienda {
+  flex: 1 1 220px;
+  background-color: var(--ciruela-claro);
+  padding: 24px;
+  border-radius: 6px;
+}
+
+.info-tienda h3 {
+  color: var(--mostaza);
+  margin-bottom: 12px;
+}
+
+/* ---------- PIE DE PÁGINA ---------- */
+footer {
+  text-align: center;
+  padding: 24px 20px;
+  background-color: var(--ciruela-claro);
+  border-top: 3px solid var(--mostaza);
+  font-size: 0.9rem;
+}
+
+/* ---------- RESPONSIVO (media query) ----------
+   En pantallas de 600px o menos, el menú se centra en columna */
+@media (max-width: 600px) {
+  .menu {
+    justify-content: center;
+    text-align: center;
+  }
+
+  .menu-links {
+    justify-content: center;
+  }
+
+  .portada {
+    padding: 60px 20px;
+  }
+}
+
+/* Respeta a quien tiene desactivadas las animaciones en su sistema */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
